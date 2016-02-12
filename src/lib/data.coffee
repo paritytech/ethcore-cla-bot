@@ -28,11 +28,11 @@ exports.save = (req, res) ->
           res.send 500
         else
           console.log   'Submission Saved'
-          res.send 200, 'Submission Saved'
+          res.send 200
 
       if update
         console.log   'Already Registered'
-        res.send 500
+        res.send 200
       else
         col.save form, cb
 

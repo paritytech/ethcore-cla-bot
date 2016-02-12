@@ -24,12 +24,12 @@ app.get '/form/:project/:kind?', (req, res) ->
   project = req.params.project
   # Makes no sense, yet. Extensible in the future.
   if project isnt 'clabot' then project = 'clabot'
-  kind    = req.params.kind?.toLowerCase()
+  kind    = req.params.kind?.toLowerCase() || 'Individual'
   kind    = kind.charAt(0).toUpperCase() + kind.slice 1
   if kind isnt 'Entity' then kind = 'Individual'
 
   res.render 'form.jade',
-    agreement: "#{project} #{kind} Contributors License Agreement"
+    agreement: "Ethcore Contributors License Agreement"
     kind     : kind
     layout   : no
     project  : project

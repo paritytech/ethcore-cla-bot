@@ -1,32 +1,38 @@
 (function() {
   $(function() {
-    var metrics,
-        options,
-        $button = $('button[type=submit]'),
-        $form   = $('form');
-    metrics = [
-      ['#name', 'presence', 'Fill in your Full Name'],
-      // nod's email regex is incorrect
-      ['#email', /^(?:[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+\.)*[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+@(?:(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!\.)){0,61}[a-zA-Z0-9]?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!$)){0,61}[a-zA-Z0-9]?)|(?:\[(?:(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\.){3}(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\]))$/, 'Fill in a valid E-Mail Address'],
-      ['#github', /^[a-zA-Z0-9\_\-]+$/, 'We need your correct GitHub username to match contributions with this Agreement'],
-      ['#email, #address, #country, #tel', 'presence', 'This is a required field'],
-      ['#signature', /^I\sAGREE$/, 'Fill in "I AGREE"']];
-    options = {
-      helpSpanDisplay: 'help-block'
-    };
+    var $button = $('button[type=submit]'),
+        $form   = $('form'),
+        $message= $('.message')
+        $inputs = $('input:not([type="hidden"])', $form);
 
-    $form.nod(metrics, options);
+    $inputs.on('change', function(){
+      setTimeout(function(){
+        console.log($('input.valid', $form).size(), $inputs.size())
+        if($('input.valid', $form).size() === $inputs.size()){
+          $button.removeAttr('disabled');
+        }else{
+          $button.attr('disabled', 'disabled');
+        }
+      }, 100)
+    })
+    .on('keyup', function(){
+      $(this).trigger('change');
+    })
+
     $form.submit(function(e) {
-      $button.attr('disabled', 'disabled').text('Submitting...');
+      $button.attr('disabled', 'disabled').removeClass('red green').text('Submitting...');
       $.ajax({
         type: 'POST',
         url: '/form',
         data: $form.serialize(),
         success: function(data, textStatus, jqXHR) {
-          $button.text('Thanks for your submission').removeClass('btn-primary btn-danger').addClass('btn-success');
+          $button.text('Thanks for your submission')
+          $message.text('Check the github issue for updates.');
         },
         error: function(error, textStatus, jqXHR) {
-          $button.removeAttr('disabled').text('Please try again. Something went wrong').removeClass('btn-primary btn-success').addClass('btn-danger');
+          console.log(error)
+          $button.removeAttr('disabled').text('Something went wrong').addClass('red')
+          $message.text('Please try again later.');
         }
       });
       e.preventDefault();
