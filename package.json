@@ -29,7 +29,7 @@
     "postinstall": "grunt coffee"
   },
   "dependencies": {
-    "clabot": "0.0.4",
+    "clabot": "0.1.0",
     "connect-assets": "~2.4.0",
     "cradle": "~0.6.4",
     "express": "~2.5.11",
@@ -41,7 +41,9 @@
     "jade": "~0.28.2",
     "lodash": "~1.0.1",
     "mongodb": "^2.1.7",
-    "mongodb-core": "^1.3.2"
+    "mongodb-core": "^1.3.2",
+    "passport": "^0.3.2",
+    "passport-github": "^1.1.0"
   },
   "keywords": [
     "CLA",

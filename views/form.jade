@@ -1,70 +1,46 @@
-doctype 5
-html(lang="en")
-  head
-    title clabot - CLA Formular
-    meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi')
-    style.
-      body{
-        padding-top:2em;
-      }
-      iframe{
-        width:100%;
-        border:0;
-        height:300px;
-        background:#333;
-      }
-body.grey.lighten-2
-  .container
-    .container
-      .card
-        form.card-content
-          .row
-            .col.s12
-              h4
-                a(href=url) #{agreement}
-              p.
-                Electronically confirming your agreement with this license allows us to accept your contribution immediately.
-          .row
-            .input-field.col.s12
-              label(for='name') Full Name
-              input.validate(id='name', name='name', type='text', required)
-          .row
-            .input-field.col.s12
-              label(for='email') E-Mail Address
-              input.validate(id='email', name='email', type='email', required)
-          .row
-            .input-field.col.s12
-              label(for='github') GitHub Username - must match pull request
-              input.validate(id='github', name='github', type='text', required)
-          .row
-            .input-field.col.s12
-              label(for='country') Country
-              input.validate(id='country', name='country', type='text', required)
-          .row
-            .col.s12
-              p.section.center-align
-                | Please ensure you have read and agree to the&nbsp;
-                a(href=url) #{agreement}
-              iframe(src='//ethcore.io/legal.html')
-          .row
-            .input-field.col.s12
-              label(for='signature') Type "I AGREE" if you have read and agree to the terms
-              input.validate(id='signature', name='signature', type='text', pattern="I AGREE", required)
+extend layout
+block content
+  form(action="/form", method='POST')
 
-          input(type='hidden', id='project', name='project', value=project)
-          input(type='hidden', id='kind', name='kind', value=kind)
-          .row
-            .input-field.col.s12.center-align.grey-text
-              button.btn.btn-primary(type='submit', disabled) Submit
-              p.section.message.center-align
-    footer.section.center-align
-      p
-        | For support contact&nbsp;
-        a(href="mailto:admin@ethcore.io") admin@ethcore.io
-        | .
+    if user.id
+      .row
+        .col.s4
+          img.responsive-img(src=user._json.avatar_url, alt="user.username")
+        .col.s8
+          label Github Account
+          h4
+            a(href="#{user._json.html_url}", target="_blank") #{user.username}
+          h5 #{user.displayName}
+          br
+          a(href='/logout').btn.orange Logout
 
-  script(type='text/javascript', src="https://code.jquery.com/jquery-1.12.0.min.js")
-  link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css")
-  script(src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js")
-  != js('site')
+    if user.signed
+      .row
+        .col.12
+          p.section
+            | We have received your request to sign the CLA. Please check the github issue for further information, or contact <a href="mailto:admin@ethcore.io">admin@ethcore.io</a> for help.
+
+    else
+      .row
+        .input-field.col.s12
+          label(for='name') Full Name
+          input.validate(id='name', name='name', type='text', value=user._json.name, required)
+      .row
+        .input-field.col.s12
+          label(for='email') Contact E-Mail Address
+          input.validate(id='email', name='email', type='email', value=user.email, required)
+      .row
+        .col.s12
+          p.section.center-align
+            | Please ensure you have read and agree to the&nbsp;
+            a(href="//ethcore.io/legal.html") Ethcore CLA
+          iframe(src='//ethcore.io/legal.html')
+      .row
+        .input-field.col.s12
+          label(for='signature') Type "I AGREE" if you have read and agree to the terms
+          input.validate(id='signature', type='text', pattern="I AGREE", required)
+      .row
+        .input-field.col.s12.center-align.grey-text
+          button.btn(type='submit', disabled) Submit
+          p.section.message.center-align
 

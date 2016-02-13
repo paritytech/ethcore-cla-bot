@@ -1,0 +1,65 @@
+doctype 5
+html(lang="en")
+  head
+    title clabot - CLA Formular
+    meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi')
+    style.
+      body{
+        padding-top:2em;
+        font-weight:300;
+        font-size:1.1em;
+        letter-spacing:0.05em;
+        background:#19181E;
+      }
+      .card h1, .card h4{
+        font-weight:100;
+      }
+      .card h1{
+        margin-top:0;
+        text-transform:uppercase;
+      }
+      iframe{
+        width:100%;
+        border:0;
+        height:300px;
+        background:#333;
+      }
+      .card.ethcore{
+        background-color:#080809;
+      }
+      .card.ethcore .card-content{
+        padding:40px
+      }
+      .white-text a:not(.btn){
+        color:white;
+        border-bottom:1px dotted rgba(255,255,255,.5);
+      }
+      .card .btn:disabled{
+        background-color:rgba(255,255,255,.2) !important;
+      }
+body.white-text
+  .container
+    .container
+      .card.ethcore
+        .card-content
+          .row
+            .col.s12
+              h1 Ethcore
+              h4 Contributor's License Agreement
+              p.
+                Electronically confirming your agreement with this license allows us to accept your contribution immediately.
+
+          block content
+
+
+    footer.section.center-align
+      p
+        | For support contact&nbsp;
+        a(href="mailto:admin@ethcore.io") admin@ethcore.io
+        | .
+
+  script(type='text/javascript', src="https://code.jquery.com/jquery-1.12.0.min.js")
+  link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css")
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js")
+  != js('site')
+

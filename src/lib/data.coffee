@@ -3,43 +3,50 @@
 _      = require 'lodash'
 MongoClient = require('mongodb').MongoClient
 
+url = 'mongodb://localhost:27017/cla'
 col = null
-url = 'mongodb://localhost:27017/cla';
 MongoClient.connect url, (err, db) ->
+  throw err if err
   db.collection 'signers', (err, collection) ->
-    console.log err if err
+    throw err if err
     col = collection
 
-exports.save = (req, res) ->
-  res.header 'Access-Control-Allow-Origin',  'localhost'
+exports.getProfile = (id, callback) ->
+  col.findOne id: id, (err,res) ->
+    callback err, res
 
-  if not req.form.isValid
-    console.log 'Invalid form data received'
-    res.send 400, req.form.errors or 'Invalid form data received'
+exports.saveOrCreateSigner = (profile, callback) ->
+  profile.lastLogin = new Date()
+  col.update {id: profile.id}, {$set: profile}, {upsert:true}, (err,res) ->
+    callback(null, profile.id)
 
+exports.save = (req, res, done) ->
+  unless req.isAuthenticated()
+    res.end 'No Auth'
   else
-    form = req.form
-    col.findOne {github: form.github}, (err, update) ->
-      console.log 'form.github', form.github, update
-      cb = (err, dbres) ->
-        if err
-          console.log    err
-          console.log   'Database Error'
-          res.send 500
-        else
-          console.log   'Submission Saved'
-          res.send 200
+    if not req.query
+      console.log 'Invalid form data received'
+      res.end req.form.errors or 'Invalid form data received'
 
-      if update
-        console.log   'Already Registered'
-        res.send 200
-      else
-        col.save form, cb
+    else
+      col.update id: req.user.id,
+        $set:
+          name: req.query.name
+          email: req.query.email
+          signed: true
+          updatedAt: new Date()
+      , (err, update) ->
+        if err
+          res.end err
+        else
+          res.end 'Submission Saved'
 
 exports.getContractors = (callback) ->
-  col.find({}, {github:1}).toArray (err, docs) ->
+  col.find({}, {id:1}).toArray (err, docs) ->
     if err
       console.log 'Database Error'
       callback []
     else
-      callback(_.pluck(docs, 'github'))
+      callback(_.pluck(docs, 'id'))
+
+exports.saveOrCreateSigner
