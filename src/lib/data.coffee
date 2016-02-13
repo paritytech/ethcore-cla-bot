@@ -42,7 +42,7 @@ exports.save = (req, res, done) ->
           res.end 'Submission Saved'
 
 exports.getContractors = (callback) ->
-  col.find({}, {id:1}).toArray (err, docs) ->
+  col.find({signed:true}, {id:1}).toArray (err, docs) ->
     if err
       console.log 'Database Error'
       callback []
