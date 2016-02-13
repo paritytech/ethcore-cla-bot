@@ -3,9 +3,9 @@
 _      = require 'lodash'
 MongoClient = require('mongodb').MongoClient
 
-url = 'mongodb://localhost:27017/cla'
 col = null
-MongoClient.connect url, (err, db) ->
+
+MongoClient.connect process.env.MONGO_URL, (err, db) ->
   throw err if err
   db.collection 'signers', (err, collection) ->
     throw err if err

@@ -9,14 +9,12 @@ passport = require('passport')
 GitHubStrategy = require('passport-github').Strategy
 
 passport.use new GitHubStrategy
-  clientID: 'x'
-  clientSecret: 'x'
-  callbackURL: "http://localhost:1337/auth/github/callback"
+  clientID: process.env.CLIENT_ID
+  clientSecret: process.env.CLIENT_SECRET
+  callbackURL: process.env.CALLBACK_URL
 , (accessToken, refreshToken, profile, cb) ->
   data.saveOrCreateSigner profile, (err) ->
     cb(err, profile)
-
-app = express.createServer()
 
 passport.serializeUser (user, done) ->
   done null, user.id
@@ -25,8 +23,9 @@ passport.deserializeUser (id, done) ->
   data.getProfile id, (err, profile) ->
     done null, profile
 
+app = express.createServer()
 app.use express.cookieParser()
-app.use express.session({ secret: 'x' })
+app.use express.session({ secret: process.env.SESSION_SECRET })
 app.use passport.initialize()
 app.use passport.session()
 app.use require('connect-assets')()
@@ -42,18 +41,16 @@ app.get '/', (req,res) ->
   else
     res.render 'landing.jade', layout: no
 
+# create secrets object
+secrets = {}
+secrets[process.env.GITHUB_REPO_OWNER] = {}
+secrets[process.env.GITHUB_REPO_OWNER][process.env.GITHUB_REPO] = process.env.HUB_SECRET
+
 app = require('clabot').createApp
   app: app
   getContractors: data.getContractors
-  token: 'process.env.GITHUB_TOKEN'
-  templateData:
-    link: 'http://clabot.github.com/individual.html'
-    maintainer: 'boennemann'
-  secrets:
-    clabot:
-      sandbox: 'process.env.HUB_SECRET'
-      clabot: 'process.env.HUB_SECRET'
-
+  token: process.env.GITHUB_TOKEN
+  secrets: secrets
 
 # auth
 app.get '/auth/github', passport.authenticate('github')
