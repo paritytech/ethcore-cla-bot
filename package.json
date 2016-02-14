@@ -29,11 +29,11 @@
     "postinstall": "grunt coffee"
   },
   "dependencies": {
+    "body-parser": "^1.15.0",
     "clabot": "0.1.0",
     "connect-assets": "~2.4.0",
     "cradle": "~0.6.4",
-    "express": "~2.5.11",
-    "express-form": "~0.7.2",
+    "express": "~3.4.8",
     "forms": "~0.1.4",
     "grunt": "~0.4.0",
     "grunt-cli": "0.1.6",
