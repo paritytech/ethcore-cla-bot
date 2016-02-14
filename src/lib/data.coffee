@@ -42,11 +42,11 @@ exports.save = (req, res, done) ->
           res.end 'Submission Saved'
 
 exports.getContractors = (callback) ->
-  col.find({signed:true}, {id:1}).toArray (err, docs) ->
+  col.find({signed:true}, {username:1}).toArray (err, docs) ->
     if err
       console.log 'Database Error'
       callback []
     else
-      callback(_.pluck(docs, 'id'))
+      callback(_.pluck(docs, 'username'))
 
 exports.saveOrCreateSigner
