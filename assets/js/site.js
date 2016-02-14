@@ -31,7 +31,7 @@
             window.location = '/auth/github'
           }else{
             $button.text('Thanks for your submission')
-            $message.text('Check the github issue for updates.');
+            $message.html('Please update your pull request by adding the comment: <code>[clabot:check]</code>.');
           }
         },
         error: function(error, textStatus, jqXHR) {

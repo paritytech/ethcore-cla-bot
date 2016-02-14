@@ -40,7 +40,7 @@ appObj =
   token: process.env.GITHUB_TOKEN
   secrets: secrets
   templateData:
-    link: 'http://clabot.github.com/individual.html'
+    link: process.env.DOMAIN
     maintainer: 'ethcore'
 
 app.use bodyParser.json
