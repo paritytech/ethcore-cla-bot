@@ -1,8 +1,7 @@
 {
-  "name": "clabot-sample",
-  "description": "This is a sample clabot implementation powering the sandbox",
+  "name": "clabot-ethcore",
+  "description": "This is a clabot implementation for ethcore",
   "version": "0.0.0",
-  "homepage": "https://github.com/clabot/clabot",
   "author": {
     "name": "Stephan Bönnemann",
     "email": "clabot@excellenteasy.com",
