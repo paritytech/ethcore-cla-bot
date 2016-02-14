@@ -8,7 +8,7 @@
     $inputs.trigger('change')
     $inputs.on('change', function(){
       setTimeout(function(){
-        if($('input.valid', $form).size() === $inputs.size()){
+        if($('input.valid', $form).size() === $inputs.size() && !$button.hasClass('complete')){
           $button.removeAttr('disabled');
         }else{
           $button.attr('disabled', 'disabled');
@@ -26,6 +26,7 @@
         type: 'get',
         url: '/sign?' + $form.serialize(),
         success: function(data, textStatus, jqXHR) {
+          $button.addClass('complete')
           if(data === 'No Auth'){
             alert("You have been logged out. Retying...")
             window.location = '/auth/github'
