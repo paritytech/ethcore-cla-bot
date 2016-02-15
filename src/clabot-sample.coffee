@@ -1,9 +1,11 @@
 'use strict'
 
 express = require 'express'
-jade    = require 'jade'
-
-data     = require './lib/data'
+jade = require 'jade'
+fs = require 'fs'
+http = require 'http'
+https = require 'https'
+data = require './lib/data'
 
 passport = require('passport')
 GitHubStrategy = require('passport-github').Strategy
@@ -30,9 +32,7 @@ passport.deserializeUser (id, done) ->
   data.getProfile id, (err, profile) ->
     done null, profile
 
-
-# fix express 3 breaking stuff
-app = express.createServer()
+app = express()
 
 appObj =
   app: app
@@ -100,7 +100,15 @@ app.get '/form/:project/:kind?', (req, res) ->
 
 app.get '/sign', data.save
 
-port = process.env.PORT or 1337
+port = process.env.PORT or 443
+
+if process.env.SSL_KEY and process.env.SSL_CERT
+  app = https.createServer
+    key: fs.readFileSync process.env.SSL_KEY
+    cert: fs.readFileSync process.env.SSL_CERT
+  , app
+else
+  app = http.createServer()
 
 app.listen port
 console.log "Listening on #{port}"
