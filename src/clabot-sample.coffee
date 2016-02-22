@@ -25,7 +25,7 @@ passport.use new GitHubStrategy
   clientSecret: process.env.CLIENT_SECRET
   callbackURL: process.env.DOMAIN + "/auth/github/callback"
 , (accessToken, refreshToken, profile, cb) ->
-  data.createSigner profile, (err) ->
+  data.saveOrCreateSigner profile, (err) ->
     cb(err, profile)
 
 passport.serializeUser (user, done) ->

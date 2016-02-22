@@ -16,8 +16,7 @@ exports.getProfile = (id, callback) ->
     callback err, res
 
 exports.saveOrCreateSigner = (profile, callback) ->
-  profile.lastLogin = new Date()
-  col.update {id: profile.id}, {$set: profile}, {upsert:true}, (err,res) ->
+  col.update {id: profile.id}, {$set: profile, $push: {loggedInAt: new Date()}}, {upsert:true}, (err,res) ->
     callback(null, profile.id)
 
 exports.save = (req, res, done) ->
@@ -34,7 +33,8 @@ exports.save = (req, res, done) ->
           name: req.query.name
           email: req.query.email
           signed: true
-          updatedAt: new Date()
+        $push:
+          signedAt: new Date()
       , (err, update) ->
         if err
           res.end err
