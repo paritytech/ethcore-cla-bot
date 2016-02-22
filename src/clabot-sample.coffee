@@ -25,7 +25,7 @@ passport.use new GitHubStrategy
   clientSecret: process.env.CLIENT_SECRET
   callbackURL: process.env.DOMAIN + "/auth/github/callback"
 , (accessToken, refreshToken, profile, cb) ->
-  data.saveOrCreateSigner profile, (err) ->
+  data.createSigner profile, (err) ->
     cb(err, profile)
 
 passport.serializeUser (user, done) ->
@@ -45,6 +45,42 @@ appObj =
   templateData:
     link: "#{process.env.DOMAIN}"
     maintainer: 'ethcore'
+  templates:
+    notYetSigned: """
+<% if (!check && sender) { %>Hey @<%= sender %>, thank you for your Pull Request.<% } %>
+
+It looks like <% if (check) { %>@<%=sender%> hasn't<% } else { %>you haven't<% } %> signed our **C**ontributor **L**icense **A**greement, yet.
+
+<% if (!check) { %>> The purpose of a CLA is to ensure that the guardian of a project's outputs has the necessary ownership or grants of rights over all contributions to allow them to distribute under the chosen licence.
+[Wikipedia](http://en.wikipedia.org/wiki/Contributor_License_Agreement)
+
+<% if (link) { %>You can read and sign our full Contributor License Agreement at the following URL: [link](<%=link%>).<% } %>
+
+Once you've signed, plesae reply to this thread with `[clabot:check]` to prove it.<% }%>
+
+Many thanks,
+
+Ethcore CLA Bot
+      """
+    confirmSigned: """
+Hey @<%= sender %>,
+
+Thank you for signing the **C**ontributor **L**icense **A**greement. This Pull Request is ready to go!
+
+Many thanks,
+
+Ethcore CLA Bot
+      """
+    alrightSigned: """
+<% if (!check && sender) { %>Hey @<%= sender %>, thank you for your Pull Request.<% } %>
+
+<% if (maintainer){  %>@<%=maintainer%><% } %> It looks like <% if (check){  %>@<%= sender %><% } else { %>this contributor<% } %> signed our Contributor License Agreement. :+1:
+
+Many thanks,
+
+Ethcore CLA Bot
+      """
+
 
 app.use bodyParser.json
   verify: (req, res, buf, encoding) -> req.rawBody = buf
