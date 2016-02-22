@@ -16,6 +16,9 @@ secrets = {}
 secrets[process.env.GITHUB_REPO_OWNER] = {}
 secrets[process.env.GITHUB_REPO_OWNER][process.env.GITHUB_REPO] = process.env.HUB_SECRET
 
+console.log('Serving Github Repos: ', process.env.GITHUB_REPO_OWNER, process.env.GITHUB_REPO)
+console.log('Domain is: ', process.env.DOMAIN)
+
 # set up authentication
 passport.use new GitHubStrategy
   clientID: process.env.CLIENT_ID
@@ -40,7 +43,7 @@ appObj =
   token: process.env.GITHUB_TOKEN
   secrets: secrets
   templateData:
-    link: process.env.DOMAIN
+    link: "#{process.env.DOMAIN}"
     maintainer: 'ethcore'
 
 app.use bodyParser.json
@@ -67,7 +70,7 @@ app.get '/', (req,res) ->
   else
     res.render 'landing.jade', layout: no
 
-
+console.log('data', appObj.templateData)
 app = require('clabot').createApp appObj
 
 # auth
