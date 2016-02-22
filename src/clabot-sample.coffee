@@ -71,7 +71,7 @@ Many thanks,
 
 Ethcore CLA Bot
       """
-    alrightSigned: """
+    alreadySigned: """
 <% if (!check && sender) { %>Hey @<%= sender %>, thank you for your Pull Request.<% } %>
 
 <% if (maintainer){  %>@<%=maintainer%><% } %> It looks like <% if (check){  %>@<%= sender %><% } else { %>this contributor<% } %> signed our Contributor License Agreement. :+1:
