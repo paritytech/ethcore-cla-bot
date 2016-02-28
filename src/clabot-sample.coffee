@@ -47,16 +47,14 @@ appObj =
     maintainer: 'ethcore'
   templates:
     notYetSigned: """
-<% if (!check && sender) { %>Hey @<%= sender %>, thank you for your Pull Request.<% } %>
+It looks like @<%=sender%> hasn'signed our **C**ontributor **L**icense **A**greement, yet.
 
-It looks like <% if (check) { %>@<%=sender%> hasn't<% } else { %>you haven't<% } %> signed our **C**ontributor **L**icense **A**greement, yet.
-
-<% if (!check) { %>> The purpose of a CLA is to ensure that the guardian of a project's outputs has the necessary ownership or grants of rights over all contributions to allow them to distribute under the chosen licence.
+> The purpose of a CLA is to ensure that the guardian of a project's outputs has the necessary ownership or grants of rights over all contributions to allow them to distribute under the chosen licence.
 [Wikipedia](http://en.wikipedia.org/wiki/Contributor_License_Agreement)
 
-<% if (link) { %>You can read and sign our full Contributor License Agreement at the following URL: [link](<%=link%>).<% } %>
+You can read and sign our full Contributor License Agreement at the following URL: [#{process.env.DOMAIN}](#{process.env.DOMAIN})
 
-Once you've signed, plesae reply to this thread with `[clabot:check]` to prove it.<% }%>
+Once you've signed, plesae reply to this thread with `[clabot:check]` to prove it.
 
 Many thanks,
 
@@ -72,9 +70,7 @@ Many thanks,
 Ethcore CLA Bot
       """
     alreadySigned: """
-<% if (!check && sender) { %>Hey @<%= sender %>, thank you for your Pull Request.<% } %>
-
-<% if (maintainer){  %>@<%=maintainer%><% } %> It looks like <% if (check){  %>@<%= sender %><% } else { %>this contributor<% } %> signed our Contributor License Agreement. :+1:
+It looks like <% if (check){  %>@<%= sender %><% } else { %>this contributor<% } %> signed our Contributor License Agreement. :+1:
 
 Many thanks,
 
