@@ -42,6 +42,8 @@ appObj =
   getContractors: data.getContractors
   token: process.env.GITHUB_TOKEN
   secrets: secrets
+  skipCollaborators: true
+  skipContributors: true
   templateData:
     link: "#{process.env.DOMAIN}"
     maintainer: 'ethcore'
