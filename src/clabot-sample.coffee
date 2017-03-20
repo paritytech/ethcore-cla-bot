@@ -46,7 +46,7 @@ appObj =
   skipContributors: true
   templateData:
     link: "#{process.env.DOMAIN}"
-    maintainer: 'ethcore'
+    maintainer: 'paritytech'
   templates:
     notYetSigned: """
 It looks like @<%=sender%> hasn'signed our **C**ontributor **L**icense **A**greement, yet.
@@ -60,7 +60,7 @@ Once you've signed, plesae reply to this thread with `[clabot:check]` to prove i
 
 Many thanks,
 
-Ethcore CLA Bot
+Parity Technologies CLA Bot
       """
     confirmSigned: """
 Hey @<%= sender %>,
@@ -69,14 +69,14 @@ Thank you for signing the **C**ontributor **L**icense **A**greement. This Pull R
 
 Many thanks,
 
-Ethcore CLA Bot
+Parity Technologies CLA Bot
       """
     alreadySigned: """
 It looks like <% if (check){  %>@<%= sender %><% } else { %>this contributor<% } %> signed our Contributor License Agreement. :+1:
 
 Many thanks,
 
-Ethcore CLA Bot
+Parity Technologies CLA Bot
       """
 
 
