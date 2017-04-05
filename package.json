@@ -1,6 +1,6 @@
 {
-  "name": "clabot-ethcore",
-  "description": "This is a clabot implementation for ethcore",
+  "name": "clabot-parity",
+  "description": "This is a clabot implementation for Parity Technologies",
   "version": "0.0.0",
   "author": {
     "name": "Stephan Bönnemann",
