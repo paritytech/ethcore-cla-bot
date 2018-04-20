@@ -56,7 +56,7 @@ It looks like @<%=sender%> hasn't signed our **C**ontributor **L**icense **A**gr
 
 You can read and sign our full Contributor License Agreement at the following URL: [#{process.env.DOMAIN}](#{process.env.DOMAIN})
 
-Once you've signed, plesae reply to this thread with `[clabot:check]` to prove it.
+Once you've signed, please reply to this thread with `[clabot:check]` to prove it.
 
 Many thanks,
 
