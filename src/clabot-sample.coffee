@@ -14,12 +14,11 @@ bodyParser = require('body-parser')
 # create secrets object
 secrets = {}
 secrets[process.env.GITHUB_REPO_OWNER] = {}
-secrets[process.env.GITHUB_REPO_OWNER] = process.env.HUB_SECRET
-secrets[process.env.GITHUB_REPO_OWNER]['parity-ethereum'] = process.env.HUB_SECRET
 secrets[process.env.GITHUB_REPO_OWNER]['rhododendron'] = process.env.HUB_SECRET
-#secrets[process.env.GITHUB_REPO_OWNER]['sol-rs'] = process.env.HUB_SECRET
-#secrets[process.env.GITHUB_REPO_OWNER]['substrate'] = process.env.HUB_SECRET
-#secrets[process.env.GITHUB_REPO_OWNER]['polkadot'] = process.env.HUB_SECRET
+secrets[process.env.GITHUB_REPO_OWNER]['parity-ethereum'] = process.env.HUB_SECRET
+secrets[process.env.GITHUB_REPO_OWNER]['sol-rs'] = process.env.HUB_SECRET
+secrets[process.env.GITHUB_REPO_OWNER]['substrate'] = process.env.HUB_SECRET
+secrets[process.env.GITHUB_REPO_OWNER]['polkadot'] = process.env.HUB_SECRET
 
 # domain url
 hostname = process.env.HOSTNAME.split('-backend')[0]
