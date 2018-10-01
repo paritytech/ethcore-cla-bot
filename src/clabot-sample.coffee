@@ -14,16 +14,19 @@ bodyParser = require('body-parser')
 # create secrets object
 secrets = {}
 secrets[process.env.GITHUB_REPO_OWNER] = {}
-secrets[process.env.GITHUB_REPO_OWNER] = process.env.HUB_SECRET
+secrets[process.env.GITHUB_REPO_OWNER]['parity-ethereum'] = process.env.HUB_SECRET
+secrets[process.env.GITHUB_REPO_OWNER]['rhododendron'] = process.env.HUB_SECRET
 
+# domain url
+domain = process.env.HOSTNAME + 'cla.parity.io'
 console.log('Serving Github Repos: ', process.env.GITHUB_REPO_OWNER)
-console.log('Domain is: ', process.env.DOMAIN)
+console.log('Domain is: ', domain)
 
 # set up authentication
 passport.use new GitHubStrategy
   clientID: process.env.CLIENT_ID
   clientSecret: process.env.CLIENT_SECRET
-  callbackURL: process.env.DOMAIN + "/auth/github/callback"
+  callbackURL: domain + "/auth/github/callback"
 , (accessToken, refreshToken, profile, cb) ->
   data.saveOrCreateSigner profile, (err) ->
     cb(err, profile)
