@@ -14,9 +14,9 @@ bodyParser = require('body-parser')
 # create secrets object
 secrets = {}
 secrets[process.env.GITHUB_REPO_OWNER] = {}
-secrets[process.env.GITHUB_REPO_OWNER][process.env.GITHUB_REPO] = process.env.HUB_SECRET
+secrets[process.env.GITHUB_REPO_OWNER] = process.env.HUB_SECRET
 
-console.log('Serving Github Repos: ', process.env.GITHUB_REPO_OWNER, process.env.GITHUB_REPO)
+console.log('Serving Github Repos: ', process.env.GITHUB_REPO_OWNER)
 console.log('Domain is: ', process.env.DOMAIN)
 
 # set up authentication
