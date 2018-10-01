@@ -18,7 +18,8 @@ secrets[process.env.GITHUB_REPO_OWNER]['parity-ethereum'] = process.env.HUB_SECR
 secrets[process.env.GITHUB_REPO_OWNER]['rhododendron'] = process.env.HUB_SECRET
 
 # domain url
-domain = process.env.HOSTNAME + 'cla.parity.io'
+hostname = process.env.HOSTNAME.split('-backend')[0]
+domain = hostname + '.cla.parity.io'
 console.log('Serving Github Repos: ', process.env.GITHUB_REPO_OWNER)
 console.log('Domain is: ', domain)
 
