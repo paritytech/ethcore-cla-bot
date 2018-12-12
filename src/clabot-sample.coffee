@@ -14,16 +14,28 @@ bodyParser = require('body-parser')
 # create secrets object
 secrets = {}
 secrets[process.env.GITHUB_REPO_OWNER] = {}
-secrets[process.env.GITHUB_REPO_OWNER][process.env.GITHUB_REPO] = process.env.HUB_SECRET
+secrets[process.env.GITHUB_REPO_OWNER]['rhododendron'] = process.env.HUB_SECRET
+secrets[process.env.GITHUB_REPO_OWNER]['parity-ethereum'] = process.env.HUB_SECRET
+secrets[process.env.GITHUB_REPO_OWNER]['sol-rs'] = process.env.HUB_SECRET
+secrets[process.env.GITHUB_REPO_OWNER]['substrate'] = process.env.HUB_SECRET
+secrets[process.env.GITHUB_REPO_OWNER]['polkadot'] = process.env.HUB_SECRET
+secrets[process.env.GITHUB_REPO_OWNER]['shasper'] = process.env.HUB_SECRET
+secrets[process.env.GITHUB_REPO_OWNER]['parity-codec'] = process.env.HUB_SECRET
+secrets[process.env.GITHUB_REPO_OWNER]['parity-rocksdb'] = process.env.HUB_SECRET
+secrets[process.env.GITHUB_REPO_OWNER]['oo7'] = process.env.HUB_SECRET
+secrets[process.env.GITHUB_REPO_OWNER]['js-libs'] = process.env.HUB_SECRET
+secrets[process.env.GITHUB_REPO_OWNER]['fether'] = process.env.HUB_SECRET
 
-console.log('Serving Github Repos: ', process.env.GITHUB_REPO_OWNER, process.env.GITHUB_REPO)
-console.log('Domain is: ', process.env.DOMAIN)
+# domain url
+domain = process.env.DOMAIN
+console.log('Serving Github Repos: ', process.env.GITHUB_REPO_OWNER)
+console.log('Domain is: ', domain)
 
 # set up authentication
 passport.use new GitHubStrategy
   clientID: process.env.CLIENT_ID
   clientSecret: process.env.CLIENT_SECRET
-  callbackURL: process.env.DOMAIN + "/auth/github/callback"
+  callbackURL: domain + "/auth/github/callback"
 , (accessToken, refreshToken, profile, cb) ->
   data.saveOrCreateSigner profile, (err) ->
     cb(err, profile)
@@ -45,7 +57,7 @@ appObj =
   skipCollaborators: true
   skipContributors: true
   templateData:
-    link: "#{process.env.DOMAIN}"
+    link: "#{domain}"
     maintainer: 'paritytech'
   templates:
     notYetSigned: """
