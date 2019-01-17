@@ -12,7 +12,8 @@ GitHubStrategy = require('passport-github').Strategy
 bodyParser = require('body-parser')
 
 # create secrets object
-secrets[process.env.GITHUB_REPO_OWNER] = process.env.HUB_SECRET;
+secrets = {}
+secrets[process.env.GITHUB_REPO_OWNER] = process.env.HUB_SECRET
 
 # domain url
 domain = process.env.DOMAIN
